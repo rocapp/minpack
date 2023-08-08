@@ -1,0 +1,13 @@
+#!/bin/sh
+
+export CC=gcc
+
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+
+echo -e "$(pkg-config --modversion minpack)"
+
+pyenv shell 3.10.9
+python -m pip install .
+
+
+python -c $'import minpack\nprint(dir(minpack))'
