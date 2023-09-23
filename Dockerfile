@@ -1,31 +1,34 @@
 # Use an official Python runtime as a parent image
-FROM python:3.9-slim-buster
+FROM public.ecr.aws/lambda/python:3.9 as base
 
 # Set the working directory in the container
-WORKDIR /app
+WORKDIR /var/task
 
-# Copy the local minpack directory contents into the container at /app/minpack
-COPY . /app/minpack
+# Copy the local minpack directory contents into the container at /var/task/minpack
+COPY . /var/task/minpack
 
 # Install any needed packages specified in requirements.txt
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+RUN yum install -y \
     gcc \
-    gfortran \
-    meson \
+    gcc-gfortran \
     ninja-build \
-    libffi-dev && \
-    python3-pip && \
-    rm -rf /var/lib/apt/lists/* && \
-    pip3 install -r /app/minpack/python/requirements.txt
+    libffi-devel \
+    pkgconfig \
+    && \
+    yum clean all
 
 # Build and install Minpack (plus python wrapper)
-WORKDIR /app/minpack
-RUN bash ./install_minpack.sh
+FROM base as build
 
-# Create a non-root user
-RUN useradd -m myuser
-USER myuser
+# Set the working directory in the container
+WORKDIR /var/task/minpack
+
+#: check for pkg-config
+RUN bash -c 'type pkg-config || echo "pkg-config not found"'
+
+#: install python requirements
+RUN pip3 install --upgrade pip && \
+    pip install "https://github.com/fortran-lang/minpack/archive/refs/heads/main.zip#egg=minpack&subdirectory=python"
 
 # Expose port 5000 to the outside world
 EXPOSE 5000
@@ -35,5 +38,5 @@ HEALTHCHECK --interval=5m --timeout=3s \
     CMD curl -f http://localhost/ || exit 1
 
 # Run lmdif function from minpack when the container launches
-WORKDIR /app/minpack/python
-ENTRYPOINT ["quart"]
+WORKDIR /var/task/minpack/python
+ENTRYPOINT ["app.app"]
