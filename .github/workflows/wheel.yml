@@ -77,3 +77,23 @@ jobs:
         name: minpack-python-${{ matrix.python }}
         path: minpack-*/dist/*.whl
         retention-days: 5
+
+    - name: Upload wheel as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: minpack_wheel
+        path: python/dist/*.whl
+
+    - name: Create GitHub Release and Upload Wheel
+      if: github.ref == 'refs/heads/main'  # Only run for the main branch
+      run: |
+        # Install GitHub CLI
+        sudo apt install -y gh
+
+        # Authenticate with GitHub CLI
+        echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+
+        # Create a new GitHub release
+        gh release create v${{ github.run_number }} ./your-minpack-repo/dist/*.whl \
+          --title "Release v${{ github.run_number }}" \
+          --notes "Auto-generated release"
