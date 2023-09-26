@@ -122,19 +122,6 @@ jobs:
         echo "MINPACK_OUTPUT=${{ env.OUTPUT }}.xz" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
       env:
         OUTPUT: minpack-${{ matrix.os }}.tar
-
-    - name: Upload package
-      if: ${{ matrix.build == 'meson' && matrix.build-type != 'coverage' }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: ${{ env.MINPACK_OUTPUT }}
-        path: ${{ env.MINPACK_OUTPUT }}
-
-    - name: Upload coverage report
-      if: ${{ matrix.build-type == 'coverage' }}
-      uses: codecov/codecov-action@v2
-
-
   Python:
     needs:
       - Build
@@ -148,14 +135,14 @@ jobs:
         build: [meson]
         os: [ubuntu-latest, macos-latest]
         gcc: [10]
-        python: ['3.7', '3.8', '3.9']
+        python: ['3.7', '3.8', '3.9', '3.10', '3.11']
 
         # Additional test for setuptools build
         include:
         - build: setuptools
           os: ubuntu-latest
           gcc: 10
-          python: '3.9'
+          python: '3.10'
 
     env:
       FC: gfortran
