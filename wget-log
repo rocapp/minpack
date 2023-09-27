@@ -1,16 +1,0 @@
---2023-09-26 21:37:43--  https://github.com/fortran-lang/minpack/archive/refs/heads/main.zip
-Resolving github.com (github.com)... 192.30.255.112
-Connecting to github.com (github.com)|192.30.255.112|:443... connected.
-HTTP request sent, awaiting response... 302 Found
-Location: https://codeload.github.com/fortran-lang/minpack/zip/refs/heads/main [following]
---2023-09-26 21:37:44--  https://codeload.github.com/fortran-lang/minpack/zip/refs/heads/main
-Resolving codeload.github.com (codeload.github.com)... 192.30.255.121
-Connecting to codeload.github.com (codeload.github.com)|192.30.255.121|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: unspecified [application/zip]
-Saving to: ‘main.zip’
-
-main.zip                                    [<=>                                                                          ]       0  --.-KB/s               main.zip                                    [ <=>                                                                         ]   7.35K  25.8KB/s               main.zip                                    [  <=>                                                                        ]   8.68K  14.5KB/s               main.zip                                    [   <=>                                                                       ]   3.64M  4.56MB/s               main.zip                                    [    <=>                                                                      ]   9.25M  10.3MB/s    in 0.9s    
-
-2023-09-26 21:37:45 (10.3 MB/s) - ‘main.zip’ saved [9704023]
-
