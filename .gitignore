@@ -1,3 +1,10 @@
+# python
+__pycache__/
+
+# emacs backups
+*.*~
+.*~
+
 # environment
 *.env
 
