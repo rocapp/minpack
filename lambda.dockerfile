@@ -27,16 +27,14 @@ WORKDIR /var/task/minpack
 RUN bash -c 'type pkg-config || echo "pkg-config not found"'
 
 #: install python requirements
-RUN pip3 install --upgrade pip && \
-    pip install "https://github.com/fortran-lang/minpack/archive/refs/heads/main.zip#egg=minpack&subdirectory=python"
+RUN pip3 install --upgrade pip
+
+RUN ./install_minpack.sh
 
 # Expose port 5000 to the outside world
 EXPOSE 5000
 
-# Add HEALTHCHECK instruction
-HEALTHCHECK --interval=5m --timeout=3s \
-    CMD curl -f http://localhost/ || exit 1
 
 # Run lmdif function from minpack when the container launches
-WORKDIR /var/task/minpack/python
-ENTRYPOINT ["app.app"]
+WORKDIR /var/task/minpack
+ENTRYPOINT ["quart", "run", "app:app"]

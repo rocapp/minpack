@@ -10,7 +10,8 @@ RUN apt-get update && apt-get upgrade -y && \
     libffi-dev \
     pkg-config \
     python3-pip \
-    meson
+    meson \
+    mlocate
 
 #: install python requirements
 RUN pip3 install --upgrade pip && \
@@ -23,11 +24,5 @@ RUN pip3 install --upgrade pip && \
 # Copy the local minpack directory contents into the container
 COPY . /app
 WORKDIR /app
-RUN ./fpm build && ./fpm test
-RUN meson setup _build -Dpython=true
 
-WORKDIR /app/python
-
-# build wheel
-RUN export PATH=/app:$PATH LIBRARY_PATH=/app/_build:$LIBRARY_PATH && \
-    python3 setup.py bdist_wheel
+RUN ./install_minpack.sh

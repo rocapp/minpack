@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!python3
 
 from os import environ, listdir, makedirs
 from os.path import join, isdir, exists
