@@ -25,4 +25,4 @@ RUN pip3 install --upgrade pip && \
 COPY . /app
 WORKDIR /app
 
-RUN ./install_minpack.sh
+RUN ./scripts/install_minpack.sh

@@ -29,7 +29,7 @@ RUN bash -c 'type pkg-config || echo "pkg-config not found"'
 #: install python requirements
 RUN pip3 install --upgrade pip
 
-RUN ./install_minpack.sh
+RUN ./scripts/install_minpack.sh
 
 # Expose port 5000 to the outside world
 EXPOSE 5000
