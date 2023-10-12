@@ -14,6 +14,9 @@ elif get_option('python')
   error('Cannot compile Python API, Fortran compiler does not support nested functions')
 endif
 
+# don't execute fortran tests (breaks if added as dependency)
+add_project_arguments('-z', 'noexecstack', language : 'fortran')
+
 srcs = files(
   'src/minpack.f90',
 )
