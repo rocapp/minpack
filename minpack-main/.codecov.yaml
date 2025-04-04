@@ -1,7 +1,0 @@
-fixes:
-  - "/home/runner/work/minpack/minpack::"
-
-ignore:
-  - "python/**/test_*.py"
-  - "test/**"
-  - "examples/**"
