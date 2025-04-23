@@ -15,7 +15,7 @@ meson install -C _build
 echo '...done install.'
 
 # Test minpack python extension
-cd ./python && $PYTHON_VERSION setup.py bdist_wheel && cd - && \
+cd ./python && $PYTHON_VERSION -m build && cd - && \
     cd ./python && $PYTHON_VERSION setup.py install --prefix ~/.local
 cd ~ && python3 -c $'import minpack\nprint(dir(minpack))'
 cd - || exit
